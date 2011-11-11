@@ -104,3 +104,11 @@ WebInspector.SourceTokenizer.Registry.prototype = {
     }
 }
 
+
+Object.prototype.keySet = function()
+{
+    var keys = {};
+    for (var i = 0; i < this.length; ++i)
+        keys[this[i]] = true;
+    return keys;
+};

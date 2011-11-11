@@ -27,18 +27,9 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 // Generate js file as follows:
-//
-// re2c -isc WebCore/inspector/front-end/SourceCSSTokenizer.re2js \
-// | sed 's|^yy\([^:]*\)*\:|case \1:|' \
-// | sed 's|[*]cursor[+][+]|this._charAt(cursor++)|' \
-// | sed 's|[[*][+][+]cursor|this._charAt(++cursor)|' \
-// | sed 's|[*]cursor|this._charAt(cursor)|' \
-// | sed 's|yych = \*\([^;]*\)|yych = this._charAt\1|' \
-// | sed 's|goto case \([^;]*\)|{ gotoCase = \1; continue; }|' \
-// | sed 's|unsigned\ int|var|' \
-// | sed 's|var\ yych|case 1: var yych|'
+// re2c -isc SourceCSSTokenizer.re2js | sed 's|^yy\([^:]*\)*\:|case \1:|' | sed 's|[*]cursor[+][+]|this._charAt(cursor++)|' | sed 's|[[*][+][+]cursor|this._charAt(++cursor)|' | sed 's|[*]cursor|this._charAt(cursor)|' | sed 's|yych = \*\([^;]*\)|yych = this._charAt\1|' | sed 's|goto case \([^;]*\)|{ gotoCase = \1; continue; }|' | sed 's|unsigned\ int|var|' | sed 's|var\ yych|case 1: var yych|' > SourceCSSTokenizer.js
+
 
 WebInspector.SourceCSSTokenizer = function()
 {
@@ -95,7 +86,7 @@ WebInspector.SourceCSSTokenizer = function()
         "-webkit-transition-duration", "-webkit-transition-property", "-webkit-transition-timing-function",
         "-webkit-user-drag", "-webkit-user-modify", "-webkit-user-select", "-webkit-variable-declaration-block"
     ].keySet();
-    
+
     this._valueKeywords = [
         "above", "absolute", "activeborder", "activecaption", "afar", "after-white-space", "ahead", "alias", "all", "all-scroll",
         "alternate", "always","amharic", "amharic-abegede", "antialiased", "appworkspace", "aqua", "arabic-indic", "armenian",
@@ -209,13 +200,23 @@ WebInspector.SourceCSSTokenizer.prototype = {
                 CommentStart = "/*" CommentContent [\r\n];
                 CommentEnd = CommentContent "*"+ "/";
 
-                OpenCurlyBracket = "{";
-                CloseCurlyBracket = "}";
+                Newline = [\r\n] (" ")*;
+                Space = (" ")*;
 
-                Colon = ":";
-                Semicolon = ";";
+                OpenCurlyBracket = Space "{" Space;
+                CloseCurlyBracket = Space "}" Space;
 
-                NumericLiteral = "-"? ([0-9]+ | [0-9]* "." [0-9]+)  ("em" | "rem" | "__qem" | "ex" | "px" | "cm" | 
+                Colon = Space ":" Space;
+                Semicolon = Space ";" Space Newline Space;
+
+                OpenBracket = Space "(" Space;
+                CloseBracket = Space ")" Space;
+
+                Comma = Space "," Space;
+
+                Dot = ".";
+
+                NumericLiteral = "-"? ([0-9]+ | [0-9]* "." [0-9]+)  ("em" | "rem" | "__qem" | "ex" | "px" | "cm" |
                     "mm" | "in" | "pt" | "pc" | "deg" | "rad" | "grad" | "turn" | "ms" | "s" | "Hz" | "kHz" | "%")?;
 
                 Identifier = [@!_\-$0-9a-zA-Z\[\]='"/]+;
@@ -243,7 +244,7 @@ WebInspector.SourceCSSTokenizer.prototype = {
 
                 <INITIAL> OpenCurlyBracket
                 {
-                    this.tokenType = null;
+                    this.tokenType = '{';
                     if (this._condition.parseCondition === this._parseConditions.AT_RULE)
                         this._condition.parseCondition = this._parseConditions.INITIAL;
                     else
@@ -253,14 +254,14 @@ WebInspector.SourceCSSTokenizer.prototype = {
 
                 <INITIAL> CloseCurlyBracket
                 {
-                    this.tokenType = null;
+                    this.tokenType = '}';
                     this._condition.parseCondition = this._parseConditions.INITIAL;
                     return cursor;
                 }
 
                 <INITIAL> Colon
                 {
-                    this.tokenType = null;
+                    this.tokenType = ':';
                     if (this._condition.parseCondition === this._parseConditions.PROPERTY)
                         this._condition.parseCondition = this._parseConditions.PROPERTY_VALUE;
                     return cursor;
@@ -268,7 +269,7 @@ WebInspector.SourceCSSTokenizer.prototype = {
 
                 <INITIAL> Semicolon
                 {
-                    this.tokenType = null;
+                    this.tokenType = ';';
                     if (this._condition.parseCondition === this._parseConditions.AT_RULE)
                         this._condition.parseCondition = this._parseConditions.INITIAL;
                     else
@@ -276,12 +277,42 @@ WebInspector.SourceCSSTokenizer.prototype = {
                     return cursor;
                 }
 
-                <INITIAL> NumericLiteral
+                <INITIAL> Comma
+                {
+                    this.tokenType = ',';
+                    return cursor;
+                }
+
+                 <INITIAL> Dot
+                {
+                    this.tokenType = '.';
+                    return cursor;
+                }
+
+                 <INITIAL> OpenBracket
+                {
+                    this.tokenType = '(';
+                    return cursor;
+                }
+
+                 <INITIAL> CloseBracket
+                {
+                    this.tokenType = ')';
+                    return cursor;
+                }
+
+                <INITIAL> Newline
+                {
+                    this.tokenType = 'newline';
+                    return cursor;
+                }
+
+               <INITIAL> NumericLiteral
                 {
                     if (this._isPropertyValue())
                         this.tokenType = "css-number";
                     else
-                        this.tokenType = null;
+                        this.tokenType = 'number';
                     return cursor;
                 }
 

@@ -19,4 +19,18 @@
         - re2_parse's method is straight forward, can be apply to
           html/js ...
 
-* TODO implement fast css minify based on re2c method
+* TODO implement fast css minify based on re2c method [3/3]
+  SCHEDULED: <2011-11-12 Sat 05:15>
+  CLOCK: [2011-11-12 Sat 05:17]
+  :PROPERTIES:
+  :Effort:   2:30
+  :END:
+
+  - [X] text field can be compressed
+        - all space
+        - only :;
+        - only {} ()
+  - [X] regex to remove whitespace
+        - is possible to compile regex into gotos
+        - re2
+  - [X] test
