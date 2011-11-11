@@ -135,7 +135,7 @@ WebInspector.SourceCSSTokenizer = function()
         "x-large", "x-small", "xor", "xx-large", "xx-small", "yellow", "-wap-marquee", "-webkit-activelink", "-webkit-auto", "-webkit-baseline-middle",
         "-webkit-body", "-webkit-box", "-webkit-center", "-webkit-control", "-webkit-focus-ring-color", "-webkit-grab", "-webkit-grabbing",
         "-webkit-gradient", "-webkit-inline-box", "-webkit-left", "-webkit-link", "-webkit-marquee", "-webkit-mini-control", "-webkit-nowrap", "-webkit-right",
-        "-webkit-small-control", "-webkit-text", "-webkit-xxx-large", "-webkit-zoom-in", "-webkit-zoom-out",
+        "-webkit-small-control", "-webkit-text", "-webkit-xxx-large", "-webkit-zoom-in", "-webkit-zoom-out"
     ].keySet();
 
     this._mediaTypes = ["all", "aural", "braille", "embossed", "handheld", "import", "print", "projection", "screen", "tty", "tv"].keySet();
@@ -184,7 +184,7 @@ WebInspector.SourceCSSTokenizer.prototype = {
         while (1) {
             switch (gotoCase)
             // Following comment is replaced with generated state machine.
-            
+
         {
             case 1: var yych;
             var yyaccept = 0;

@@ -35,21 +35,21 @@ WebInspector.SourceTokenizer = function()
 };
 
 WebInspector.SourceTokenizer.prototype = {
-    set line(line) {
+    line: function(line) {
         this._line = line;
     },
 
-    set condition(condition)
+    condition :function(condition)
     {
+      if (condition !== underline) {
         this._condition = condition;
-    },
-
-    get condition()
-    {
+        return null;
+      } else {
         return this._condition;
+      }
     },
 
-    get subTokenizer()
+    subTokenizer: function()
     {
         return this._condition.subTokenizer;
     },
@@ -249,7 +249,7 @@ WebInspector.SourceCSSTokenizer = function()
         "x-large", "x-small", "xor", "xx-large", "xx-small", "yellow", "-wap-marquee", "-webkit-activelink", "-webkit-auto", "-webkit-baseline-middle",
         "-webkit-body", "-webkit-box", "-webkit-center", "-webkit-control", "-webkit-focus-ring-color", "-webkit-grab", "-webkit-grabbing",
         "-webkit-gradient", "-webkit-inline-box", "-webkit-left", "-webkit-link", "-webkit-marquee", "-webkit-mini-control", "-webkit-nowrap", "-webkit-right",
-        "-webkit-small-control", "-webkit-text", "-webkit-xxx-large", "-webkit-zoom-in", "-webkit-zoom-out",
+        "-webkit-small-control", "-webkit-text", "-webkit-xxx-large", "-webkit-zoom-in", "-webkit-zoom-out"
     ].keySet();
 
     this._mediaTypes = ["all", "aural", "braille", "embossed", "handheld", "import", "print", "projection", "screen", "tty", "tv"].keySet();

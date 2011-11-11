@@ -1,4 +1,3 @@
-
 * DONE benchmark
   - [X] time
     time v8 re2_parse.js >/dev/null
@@ -19,11 +18,15 @@
         - re2_parse's method is straight forward, can be apply to
           html/js ...
 
-* TODO implement fast css minify based on re2c method [3/3]
+* TODO implement fast css minify based on re2c method [4/4]
   SCHEDULED: <2011-11-12 Sat 05:15>
-  CLOCK: [2011-11-12 Sat 05:17]
+  CLOCK: [2011-11-12 Sat 07:58]
   :PROPERTIES:
   :Effort:   2:30
+  :Clockhistory: 1
+  | :Clock1: | [2011-11-12 Sat 05:17]--[2011-11-12 Sat 07:57] =>  2:40 | init |  160 |
+  |          |                                                         |      | 2.67 |
+  #+TBLFM: $4='(convert-time-to-minutes $2)::@2$4=vsum(@1..@1)/60;%.2f
   :END:
 
   - [X] text field can be compressed
@@ -34,3 +37,4 @@
         - is possible to compile regex into gotos
         - re2
   - [X] test
+  - [X] compress script itself

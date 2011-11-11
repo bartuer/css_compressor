@@ -35,21 +35,21 @@ WebInspector.SourceTokenizer = function()
 };
 
 WebInspector.SourceTokenizer.prototype = {
-    set line(line) {
+    line: function(line) {
         this._line = line;
     },
 
-    set condition(condition)
+    condition :function(condition)
     {
+      if (condition !== underline) {
         this._condition = condition;
-    },
-
-    get condition()
-    {
+        return null;
+      } else {
         return this._condition;
+      }
     },
 
-    get subTokenizer()
+    subTokenizer: function()
     {
         return this._condition.subTokenizer;
     },
