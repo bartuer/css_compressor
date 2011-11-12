@@ -18,15 +18,17 @@
         - re2_parse's method is straight forward, can be apply to
           html/js ...
 
-* TODO implement fast css minify based on re2c method [4/4]
+* DONE implement fast css minify based on re2c method [4/4]
   SCHEDULED: <2011-11-12 Sat 05:15>
-  CLOCK: [2011-11-12 Sat 07:58]
+  CLOCK: [2011-11-12 Sat 07:58]--[2011-11-12 Sat 08:03] =>  0:05
   :PROPERTIES:
   :Effort:   2:30
-  :Clockhistory: 1
-  | :Clock1: | [2011-11-12 Sat 05:17]--[2011-11-12 Sat 07:57] =>  2:40 | init |  160 |
-  |          |                                                         |      | 2.67 |
-  #+TBLFM: $4='(convert-time-to-minutes $2)::@2$4=vsum(@1..@1)/60;%.2f
+  :Clockhistory: 2
+  | :Clock1: | [2011-11-12 Sat 05:17]--[2011-11-12 Sat 07:57] =>  2:40 | init     |  160 |
+  | :Clock2: | [2011-11-12 Sat 07:58]--[2011-11-12 Sat 08:03] =>  0:05 | compress |    5 |
+  |          |                                                         |          | 2.75 |
+  #+TBLFM: $4='(convert-time-to-minutes $2)::@3$4=vsum(@1..@2)/60;%.2f
+  :Commit:   (git-link "~/local/src/re2c_hw_bench" "36dae16bfe796c77f86964ef2133f8d4386fd07a")
   :END:
 
   - [X] text field can be compressed
@@ -38,3 +40,17 @@
         - re2
   - [X] test
   - [X] compress script itself
+* compare yui css compressor
+  http://developer.yahoo.com/yui/compressor/
+  - yui can remove empty rule
+  - yui can do like 0.9 -> .9
+  - for css spirit lots of images
+    |----------+----------+-----------|
+    |          | my       | yui       |
+    |----------+----------+-----------|
+    | time     | 0m0.236s | 0m12.790s |
+    | space    | 33k      | 851k      |
+    | language | js       | java      |
+    | loc      | 2k       | ?         |
+    |----------+----------+-----------|
+
