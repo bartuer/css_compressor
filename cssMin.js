@@ -1765,7 +1765,7 @@ WebInspector.SourceCSSTokenizer.prototype.__proto__ = WebInspector.SourceTokeniz
 
 (function (a) {
   if (!a[0]) {
-     print("Usage: d8 cssMin.js -- filename.js");
+     print("Usage: d8 cssMin.js -- filename");
      quit(1);
   }
   var css_text = '';

@@ -1,4 +1,4 @@
-* DONE benchmark
+* DONE benchmark [3/3]
   - [X] time
     time v8 re2_parse.js >/dev/null
     real	0m0.115s
@@ -16,7 +16,7 @@
         - parser interface is clean, very flexible
           it take part of matcher to response to event
         - re2_parse's method is straight forward, can be apply to
-          html/js ...
+          html/js, like ragel ...
 
 * DONE implement fast css minify based on re2c method [4/4]
   SCHEDULED: <2011-11-12 Sat 05:15>
@@ -40,11 +40,11 @@
         - re2
   - [X] test
   - [X] compress script itself
-* compare yui css compressor
+* DONE compare with yui css compressor
   http://developer.yahoo.com/yui/compressor/
   - yui can remove empty rule
   - yui can do like 0.9 -> .9
-  - for css spirit lots of images
+  - for css spirit lots of images:
     |----------+----------+-----------|
     |          | my       | yui       |
     |----------+----------+-----------|
@@ -53,4 +53,4 @@
     | language | js       | java      |
     | loc      | 2k       | ?         |
     |----------+----------+-----------|
-
+* TODO works as Web Worker
